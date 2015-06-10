@@ -4,7 +4,7 @@
 
 ;; Author: Friedrich Paetzke <paetzke@fastmail.fm>
 ;; URL: http://paetzke.me/project/py-autopep8.el
-;; Version: 0.7
+;; Version: 0.8
 
 ;;; Commentary:
 
@@ -20,6 +20,8 @@
 ;; py-autopep8-options e.g.
 
 ;;   (setq py-autopep8-options '("--max-line-length=100"))
+
+(require 'shut-up)
 
 ;;; Code:
 
@@ -129,8 +131,8 @@ Note that `--in-place' is used by default."
       (erase-buffer))
 
     (if (and only-on-region (use-region-p))
-        (write-region (region-beginning) (region-end) tmpfile)
-      (write-region nil nil tmpfile))
+        (shut-up-write-region (region-beginning) (region-end) tmpfile)
+      (shut-up-write-region nil nil tmpfile))
 
     (if (funcall executable-call errbuf tmpfile)
         (if (zerop (call-process-region (point-min) (point-max) "diff" nil
